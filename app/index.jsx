@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import Button from "../components/Button/Button";
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import { Montserrat_600SemiBold, Montserrat_700Bold } from "@expo-google-fonts/montserrat";
+import { Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 import { Lato_400Regular, Lato_700Bold } from "@expo-google-fonts/lato";
 import Pagination from "../components/Pagination/Pagination";
 
@@ -27,7 +27,8 @@ export default function App() {
    Lato_400Regular,
    Lato_700Bold,
    Montserrat_600SemiBold,
-    
+   Montserrat_500Medium,
+   Montserrat_400Regular,
   });
 
   const onLayoutRootView = useCallback(async () => {

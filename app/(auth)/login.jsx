@@ -23,6 +23,9 @@ const Login = () => {
     const togglemodal = () => {
         setIsModalVisible(!isModalVisible);
     };
+    const login = () => {
+        router.push('home');
+    };
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Login Account</Text>
@@ -55,7 +58,7 @@ const Login = () => {
         <TouchableOpacity style={styles.forget_modal}>
         <Text style={styles.forget} onPress={togglemodal}>Forgot password</Text>
         </TouchableOpacity>
-        <Button buttonText="login" />
+        <Button buttonText="login" onPress={login} />
         <Text style={styles.or}>Or Using other Method</Text>
         <View style={styles.tab_container}>
             {
@@ -93,7 +96,7 @@ const Login = () => {
                                 </View>
                             </View>
                             <View style={styles.button_box}>
-                            <Button buttonText="Continue" />
+                            <Button buttonText="Continue" onPress={login} />
                             </View>
                             </View>
                             </View>

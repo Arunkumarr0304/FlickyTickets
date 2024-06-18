@@ -46,6 +46,11 @@ const Verification = () => {
             }
         }
     };
+
+    const login = () => {
+        router.push('home');
+    };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -93,7 +98,7 @@ const Verification = () => {
                             </View>
                             <Text style={styles.modal_heading}>Register Success</Text>
                             <Text style={styles.modal_description}>Congratulation your account already created. Please login to get amazing experience.</Text>
-                           <Button buttonText="Continue" />
+                           <Button buttonText="Continue" onPress={login} />
                             </View>
                             </View>
 
