@@ -82,7 +82,7 @@ const TabsLayout = () => {
         <Tabs.Screen 
           name="favourite" 
           options={{
-            title: 'Favourite',
+            title: 'Favorite',
           }} 
         />
         <Tabs.Screen 

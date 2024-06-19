@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderRadius: 10,
     justifyContent: 'center',
-  
+    minWidth: 150,
   },
   buttonText: {
     textTransform: 'capitalize',

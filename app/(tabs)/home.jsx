@@ -285,6 +285,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 10,
+    paddingHorizontal: 5,
   },
   rec_movie_name: {
     fontSize: 14,
