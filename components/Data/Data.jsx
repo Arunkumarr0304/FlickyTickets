@@ -30,6 +30,17 @@ import Cast4 from "../../assets/images/cast4.png";
 import Cast5 from "../../assets/images/cast5.png";
 import Cast6 from "../../assets/images/cast6.png";
 
+import Seat from "../../assets/images/seat.svg";
+import Booked from "../../assets/images/booked_seat.svg";
+
+import Booking1 from "../../assets/images/booking_ticket.svg";
+import Booking2 from "../../assets/images/booking_calendar.svg";
+import Booking3 from "../../assets/images/booking_timer.svg";
+
+import Paypal from '../../assets/images/paypal.svg';
+import Phonepay from '../../assets/images/phonepay.svg';
+
+
 export const pages = [
     {
         id: 1,
@@ -270,4 +281,272 @@ export const crew_data = [
         image: Cast1, 
         text: 'Maitreyi Rama',
     },   
+]
+
+
+export const seats = [
+    {
+        id: 1,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 2,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 3,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 4,
+        
+        
+    },
+    {
+        id: 5,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 6,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 7,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 8,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 9,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 10,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 11,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 12,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 13,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 14,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 15,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 16,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 17,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 18,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 19,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 20,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 21,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 22,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 23,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 24,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 25,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 26,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 27,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 28,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 29,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 30,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 31,
+        image:  <Booked />,
+        status: 'booked',
+    },
+
+    {
+        id: 32,
+        image:  <Booked />,
+        status: 'booked',
+    },
+    {
+        id: 33,
+        image:  <Booked />,
+        status: 'booked',
+    },
+    {
+        id: 34,
+        image:  <Seat />,
+        status: 'available',
+    },
+    {
+        id: 35,
+        image:  <Seat />,
+        status: 'available',
+    },
+
+
+]
+
+
+
+export const time_tab = [
+    {
+        id: 1,
+        time: '08:00 AM',
+    },
+    {
+        id: 2,
+        time: '08:30 AM',
+    },
+    {
+        id: 3,
+        time: '09:00 AM',
+    },
+    {
+        id: 4,
+        time: '11:30 AM',
+    },
+    {
+        id: 5,
+        time: '12:30 AM',
+    },
+    {
+        id: 6,
+        time: '02:00 PM',
+    },
+    {
+        id: 7,
+        time: '06:00 PM',
+    },
+    {
+        id: 8,
+        time: '10:00 PM',
+    },
+
+]
+
+
+export const booking = [
+    {
+        id: 1,
+        icon: <Booking1 />,
+        heading: 'Ticket',
+        value: '3 Ticket',
+    },
+    {
+        id: 2,
+        icon: <Booking2 />,
+        heading: 'Dates',
+        value: 'Mon, 16 Jun 2024',
+    },
+    {
+        id: 3,
+        icon: <Booking3 />,
+        heading: 'Time',
+        value: '08:00 AM',
+    },
+]
+
+export const booking2 = [
+    {
+        id: 1,
+        heading: 'Price',
+        value: '$62.00',
+    },
+    {
+        id: 2,
+        heading: 'Apps Fee',
+        value: '$2.50',
+    },
+]
+
+export const pay_card = [
+    {
+        id: 1,
+        icon: <Paypal />,
+        text: 'PayPal',
+    },
+    {
+        id: 2,
+        icon: <Phonepay />,
+        text: 'phone pay',
+    }
 ]
