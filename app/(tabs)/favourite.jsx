@@ -1,28 +1,41 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import Back from "../../assets/images/back.svg";
+import Dark_back from "../../assets/images/dark_back.svg";
 import { Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { recommend_data } from '../../components/Data/Data';
 import Imdb from "../../assets/images/imdb.svg";
+import { router, Link } from "expo-router";
+import ThemeContext from '../../theme/ThemeContext';
 
 const Favourite = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
+
+  const details = () => {
+    router.push('movie_details');
+  };
+  const back = () => {
+    router.push('home');
+  };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.header}>
-        <Back />
-        <Text style={styles.heading}>My Favorite</Text>
+      <TouchableOpacity onPress={back}>
+       {darkMode? <Dark_back /> :  <Back />}
+       </TouchableOpacity>
+        <Text style={[styles.heading, {color: theme.color}]}>My Favorite</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View horizontal={true} style={styles.recommend_container}>
         {
           recommend_data.map((d) => (
-            <TouchableOpacity style={styles.recommend_box} key={d.id}>
+            <TouchableOpacity style={styles.recommend_box} key={d.id} onPress={details}>
               <Image source={d.image} alt='image' style={styles.rec_image} />
               <View style={styles.content}>
-                <Text style={styles.rec_movie_name}>{d.name}</Text>
+                <Text style={[styles.rec_movie_name, {color: theme.color}]}>{d.name}</Text>
                 <View style={styles.rec_content_right}>
                 <Imdb />
-                <Text style={styles.rating}>{d.rating}</Text>
+                <Text style={[styles.rating, {color: theme.color}]}>{d.rating}</Text>
                 </View>
               </View>
             </TouchableOpacity>

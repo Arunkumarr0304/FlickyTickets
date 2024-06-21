@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Image } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Image, Modal } from 'react-native';
+import React, { useContext, useState } from 'react';
 import Back from "../../assets/images/back.svg";
 import { Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Master from "../../assets/images/master.svg";
@@ -11,70 +11,114 @@ import Paypal from '../../assets/images/paypal.svg';
 import Phonepay from '../../assets/images/phonepay.svg';
 import { pay_card } from '../../components/Data/Data';
 import { router, Link } from "expo-router";
+import Tick from "../../assets/images/payment_success.svg";
+import ThemeContext from '../../theme/ThemeContext';
+import Dark_back from "../../assets/images/dark_back.svg";
 
 const Payment = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   const [checked, setChecked] = useState(false);
-  const [checked1, setChecked1] = useState(false);
+  const [checkedStates, setCheckedStates] = useState(Array(pay_card.length).fill(false));
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const continues = () => {
+    setIsModalVisible(true);
+};
 
   const handlePress = () => {
     setChecked(!checked);
   };
 
-  const handlePress1 = () => {
-    setChecked1(!checked1);
+  const handlePress1 = (index) => {
+    const newCheckedStates = [...checkedStates];
+    newCheckedStates[index] = !newCheckedStates[index];
+    setCheckedStates(newCheckedStates);
   };
+
   const add = () => {
     router.push('add_new_card');
   };
 
+  const login = () => {
+    router.push('home');
+};
+
+const back = () => {
+  router.push('checkout');
+};
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor:theme.background}]}>
       <View style={styles.header}>
-        <Back />
-        <Text style={styles.heading}>Payment Method</Text>
+      <TouchableOpacity onPress={back}>
+       {darkMode? <Dark_back /> :  <Back />}
+       </TouchableOpacity>
+        <Text style={[styles.heading, {color: theme.color}]}>Payment Method</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.card_header}>
-        <View style={styles.card_header_left}>
-        <Master />
-        <Text style={styles.card_head}>Credit/Debit Card</Text>
-        </View>
-        <CheckCircle size={24} color="#241353" checked={checked} onPress={handlePress} />
-      </View>
-      <TouchableOpacity style={styles.card_box}>
-        <Image source={Card} alt='card' style={styles.image} />
-        <Text style={styles.card_top}>Card</Text>
-        <View style={styles.card_content}>
-          <Text style={styles.card_no}>XXXX XXXX XXXX 0090</Text>
-          <Text style={styles.card_holer}>Card holder</Text>
-          <View style={styles.card_bottom_row}>
-            <Text style={styles.holder_name}>Name</Text>
-            <Text style={styles.year}>00/00</Text>
+        <View style={styles.card_header}>
+          <View style={styles.card_header_left}>
+            <Master />
+            <Text style={[styles.card_head, {color: theme.color}]}>Credit/Debit Card</Text>
           </View>
+          <CheckCircle size={24} color="#241353" checked={checked} onPress={handlePress} />
         </View>
-      </TouchableOpacity>
-      <Button buttonText="Add New Card" backgroundColor="transparent" borderColor="#FF6F6C" textColor="#FF6F6C" onPress={add} />
-      <View style={styles.or_row}>
-        <View style={styles.line}></View>
-        <Text style={styles.or}>or</Text>
-        <View style={styles.line}></View>
-      </View>
-      <View style={styles.pay_tab_container}>
-        {
-          pay_card.map((d) => (
-            <TouchableOpacity style={styles.tab} key={d.id}>
-              <View style={styles.tab_left}>
-              {d.icon}
-              <Text style={styles.tab_text}>{d.text}</Text>
-              </View>
-              <CheckCircle size={24} color="#241353" checked={checked1} onPress={handlePress1} />
-            </TouchableOpacity>
-          ))
-        }
-      </View>
-      <View style={styles.button_box}>
-        <Button buttonText="pay now" />
-      </View>
+        <TouchableOpacity style={styles.card_box}>
+          <Image source={Card} alt='card' style={styles.image} />
+          <Text style={styles.card_top}>Card</Text>
+          <View style={styles.card_content}>
+            <Text style={styles.card_no}>XXXX XXXX XXXX 0090</Text>
+            <Text style={styles.card_holer}>Card holder</Text>
+            <View style={styles.card_bottom_row}>
+              <Text style={styles.holder_name}>Name</Text>
+              <Text style={styles.year}>00/00</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Button buttonText="Add New Card" backgroundColor="transparent" borderColor="#FF6F6C" textColor="#FF6F6C" onPress={add} />
+        <View style={styles.or_row}>
+          <View style={styles.line}></View>
+          <Text style={styles.or}>or</Text>
+          <View style={styles.line}></View>
+        </View>
+        <View style={styles.pay_tab_container}>
+          {
+            pay_card.map((d, index) => (
+              <TouchableOpacity style={[styles.tab, {backgroundColor: theme.cardbg}]} key={d.id} onPress={() => handlePress1(index)}>
+                <View style={styles.tab_left}>
+                  {d.icon}
+                  <Text style={styles.tab_text}>{d.text}</Text>
+                </View>
+                <CheckCircle size={24} color="#241353" checked={checkedStates[index]}  />
+              </TouchableOpacity>
+            ))
+          }
+        </View>
+        <View style={styles.button_box}>
+          <Button buttonText="pay now" onPress={continues} />
+        </View>
+        <Modal
+                transparent={true}
+                visible={isModalVisible}
+                onRequestClose={() => setIsModalVisible(false)}
+            >
+                     <View style={styles.modalOverlay}>
+                        <View style={[styles.modalContent, {backgroundColor: theme.background}]}>
+                        <View style={styles.modal_header}>
+                                <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                              {darkMode? <Dark_back /> :  <Back />}
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.image_box}>
+                                <Tick />
+                            </View>
+                            <Text style={[styles.modal_heading, {color: theme.color}]}>Payment Success</Text>
+                            <Text style={styles.modal_description}>Ticket Payment, for the movie has been successful, Thank You!</Text>
+                           <Button buttonText="Go to Homepage" onPress={login}  />
+                            </View>
+                            </View>
+
+            </Modal> 
       </ScrollView>
     </View>
   )
@@ -171,7 +215,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     fontFamily: 'Montserrat_600SemiBold',
-
   },
   year: {
     color: '#ffffff',
@@ -226,6 +269,47 @@ const styles = StyleSheet.create({
   },
   button_box: {
     marginVertical: 100,
-    
-  }
-})
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+},
+modalContent: {
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    paddingBottom: 30,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+},
+
+modal_header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+    marginBottom: 25,
+},
+image_box: {
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+modal_heading: {
+    fontSize: 26,
+    lineHeight: 36,
+    fontFamily: 'Montserrat_700Bold',
+    color: '#121212',
+    textAlign: 'center',
+    marginTop: 25,
+},
+modal_description: {
+    fontSize: 14,
+    lineHeight: 24,
+    fontFamily: 'Lato_400Regular',
+    textAlign: 'center',
+    color: '#757575',
+    marginTop: 16,
+    marginBottom: 50,
+}
+});

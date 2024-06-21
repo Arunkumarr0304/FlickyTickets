@@ -40,6 +40,18 @@ import Booking3 from "../../assets/images/booking_timer.svg";
 import Paypal from '../../assets/images/paypal.svg';
 import Phonepay from '../../assets/images/phonepay.svg';
 
+import Profile1 from "../../assets/images/profile1.svg";
+import Profile2 from "../../assets/images/profile2.svg";
+import Profile3 from "../../assets/images/profile3.svg";
+import Profile4 from "../../assets/images/profile4.svg";
+import Profile5 from "../../assets/images/profile5.svg";
+
+import Dark_profile1 from "../../assets/images/dark_profile1.svg";
+import Dark_profile2 from "../../assets/images/dark_profile2.svg";
+import Dark_profile3 from "../../assets/images/dark_profile3.svg";
+import Dark_profile4 from "../../assets/images/dark_profile4.svg";
+import Dark_profile5 from "../../assets/images/dark_profile5.svg";
+
 
 export const pages = [
     {
@@ -549,4 +561,88 @@ export const pay_card = [
         icon: <Phonepay />,
         text: 'phone pay',
     }
+]
+
+export const modal_data = [
+    {
+        id: 1,
+        percentage: '50% Cashback',
+        expired : 'Expired in 2 Days',
+    },
+    {
+        id: 2,
+        percentage: '15% Discount',
+        expired : 'Expired in 1 Days',
+    },
+    {
+        id: 3,
+        percentage: '10% Cashback',
+        expired : 'Expired in 7 Days',
+    },
+
+]
+
+
+export const language = [
+    {
+        id: 1,
+        text: 'all',
+    },
+    {
+        id: 2,
+        text: 'English',
+    },
+    {
+        id: 3,
+        text: 'Spanish',
+    },
+    {
+        id: 4,
+        text: 'Tamil',
+    },
+    {
+        id: 5,
+        text: 'Malayalam',
+    },
+    {
+        id: 6,
+        text: 'Hindi',
+    },
+
+]
+
+
+
+export const profile_data = [
+    {
+        id: 1,
+        icon: <Profile1 />,
+        active_icon: <Dark_profile1 />,
+        name: 'Edit Profile',
+    },
+    {
+        id: 2,
+        icon: <Profile2 />,
+        active_icon: <Dark_profile2 />,
+        name: 'Your favorite songs',
+    },
+
+    {
+        id: 3,
+        icon: <Profile3 />,
+        active_icon: <Dark_profile3 />,
+        name: 'Dark Mode',
+    },
+    {
+        id: 4,
+        icon: <Profile4 />,
+        active_icon: <Dark_profile4 />,
+        name: 'Help & Support',
+    },
+    {
+        id: 5,
+        icon: <Profile5 />,
+        active_icon: <Dark_profile5 />,
+        name: 'Language',
+    },
 ]

@@ -1,14 +1,17 @@
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, Modal } from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import Back from "../../assets/images/back.svg";
+import Dark_back from "../../assets/images/dark_back.svg";
 import { Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import verify from "../../assets/images/verification.png";
 import { Lato_400Regular } from '@expo-google-fonts/lato';
 import Button from '../../components/Button/Button';
 import { router, Link } from "expo-router";
 import Tick from "../../assets/images/Tick.svg";
+import ThemeContext from '../../theme/ThemeContext';
 
 const Verification = () => {
+    const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
     const otpInputs = useRef([]);
     const [otp, setOtp] = useState(['', '', '', '']);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -52,24 +55,24 @@ const Verification = () => {
     };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor:theme.background}]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={back}>
-            <Back />
+        {darkMode? <Dark_back /> :  <Back />}
             </TouchableOpacity>
-            <Text style={styles.heading}>Verification</Text>
+            <Text style={[styles.heading, {color:theme.color}]}>Verification</Text>
       </View>
       <View style={styles.image_box}>
       <Image source={verify} alt='image' style={styles.images} />
       </View>
-      <Text style={styles.content_heading}>Verification Code</Text>
+      <Text style={[styles.content_heading, {color:theme.color}]}>Verification Code</Text>
       <Text style={styles.content_heading2}>We have sent the code verification to </Text>
-      <Text style={styles.content_heading3}>minatonami****@gmail.com</Text>
+      <Text style={[styles.content_heading3, {color:theme.color}]}>minatonami****@gmail.com</Text>
       <View style={styles.otp_block}>
                 {otp.map((digit, index) => (
                     <TextInput
                         key={index}
-                        style={styles.input}
+                        style={[styles.input, {color:theme.color}]}
                         maxLength={1}
                         keyboardType="numeric"
                         onChangeText={(value) => handleOtpChange(index, value)}
@@ -80,23 +83,24 @@ const Verification = () => {
                 ))}
             </View>
             <Button buttonText="continue" onPress={continues} />
-            <Text style={styles.bottom_text}>Didn’t receive the code?<Link href="/verification" style={styles.link}> Resend</Link></Text>
+            <Text style={[styles.bottom_text, {color:theme.color}]}>Didn’t receive the code?<Link href="/verification" style={styles.link}> Resend</Link></Text>
             <Modal
                 transparent={true}
                 visible={isModalVisible}
                 onRequestClose={() => setIsModalVisible(false)}
             >
                      <View style={styles.modalOverlay}>
-                        <View style={styles.modalContent}>
+                        <View style={[styles.modalContent, {backgroundColor:theme.background}]}>
                         <View style={styles.modal_header}>
                                 <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-                                <Back />
+                                {darkMode? <Dark_back /> :  <Back />}
                                 </TouchableOpacity>
+                                
                             </View>
-                            <View style={styles.image_box}>
+                            <View style={styles.image_box2}>
                                 <Tick />
                             </View>
-                            <Text style={styles.modal_heading}>Register Success</Text>
+                            <Text style={[styles.modal_heading, {color:theme.color}]}>Register Success</Text>
                             <Text style={styles.modal_description}>Congratulation your account already created. Please login to get amazing experience.</Text>
                            <Button buttonText="Continue" onPress={login} />
                             </View>
@@ -211,7 +215,7 @@ const styles = StyleSheet.create({
         gap: 20,
         marginBottom: 25,
     },
-    image_box: {
+    image_box2: {
         alignItems: 'center',
         justifyContent: 'center',
     },

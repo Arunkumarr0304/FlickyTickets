@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Back from "../../assets/images/back.svg";
+import Dark_back from "../../assets/images/dark_back.svg";
 import { Montserrat_500Medium, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import screen from "../../assets/images/screen.png";
 import { seats as initialSeats, time_tab } from '../../components/Data/Data';
@@ -11,8 +12,10 @@ import { Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
 import CustomCalendar from '../../components/Custom_calendar/Custom_Calendar';
 import Button from '../../components/Button/Button';
 import { router, Link } from "expo-router";
+import ThemeContext from '../../theme/ThemeContext';
 
 const Seat = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   const [seats, setSeats] = useState(initialSeats);
   const [activetab, setActivetab] = useState(time_tab[0].id);
 
@@ -46,12 +49,16 @@ const Seat = () => {
   const confirm = () => {
       router.push('checkout');
   };
-
+  const back = () => {
+    router.push('movie_details');
+  };
   return (
-    <View style={styles.Seatpage}>
+    <View style={[styles.Seatpage, {backgroundColor: theme.background}]}>
       <View style={styles.header}>
-        <Back />
-        <Text style={styles.heading}>Select Seat</Text>
+      <TouchableOpacity onPress={back}>
+       {darkMode? <Dark_back /> :  <Back />}
+       </TouchableOpacity>
+        <Text style={[styles.heading, {color: theme.color}]}>Select Seat</Text>
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.container}>
@@ -70,10 +77,10 @@ const Seat = () => {
             ))}
           </View>
         </View>
-        <View style={styles.stacks_container}>
-          <Text style={styles.date_heading}>Today is <Text style={styles.date}>04 June 2024</Text></Text>
+        <View style={[styles.stacks_container, {backgroundColor:theme.cardbg}]}>
+          <Text style={styles.date_heading}>Today is <Text style={[styles.date, {color: theme.color}]}>04 June 2024</Text></Text>
           <CustomCalendar />
-          <Text style={styles.header_text}>Choose a time</Text>
+          <Text style={[styles.header_text, {color: theme.color}]}>Choose a time</Text>
           <View style={styles.time_container}>
             {time_tab.map((d) => (
               <TouchableOpacity
@@ -86,7 +93,7 @@ const Seat = () => {
             ))}
           </View>
           <View style={styles.amount_button}>
-            <Text style={styles.amount}>$83 <Text style={styles.no_of_seats}>x3seats</Text></Text>
+            <Text style={[styles.amount, {color: theme.color}]}>$83 <Text style={styles.no_of_seats}>x3seats</Text></Text>
             <Button buttonText="confirm seat" onPress={confirm} />
           </View>
         </View>

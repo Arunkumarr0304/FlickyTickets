@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { Lato_400Regular } from '@expo-google-fonts/lato';
 import Person from "../../assets/images/person.svg";
@@ -10,8 +10,10 @@ import Close from "../../assets/images/eye-close.svg";
 import Button from '../../components/Button/Button';
 import { log_methods } from '../../components/Data/Data';
 import { router, Link } from "expo-router";
+import ThemeContext from '../../theme/ThemeContext';
 
 const Create_account = () => {
+    const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
     const [Passwordvisible, setPasswordvisible] = useState(false);
     const togglepasswordvisible = () => {
         setPasswordvisible(!Passwordvisible);
@@ -20,14 +22,14 @@ const Create_account = () => {
         router.push('verification');
     };
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>create account</Text>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <Text style={[styles.heading, {color:theme.color}]}>create account</Text>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
       <Text style={styles.description}>Create your account to unlock a personalized music experience tailored to your taste.</Text>
         <View style={styles.input_container}>
             <View style={styles.input_box}>
-                <Text style={styles.label}>Username</Text>
-                <TextInput style={styles.input} 
+                <Text style={[styles.label, {color: theme.color}]}>Username</Text>
+                <TextInput style={[styles.input, {backgroundColor: theme.cardbg, color: theme.color}]} 
                 placeholder='Minato Namikaze'
                 />
                 <View style={styles.icon}>
@@ -35,8 +37,8 @@ const Create_account = () => {
                 </View>
             </View>
             <View style={styles.input_box}>
-                <Text style={styles.label}>Email Or Phone Number</Text>
-                <TextInput style={styles.input} 
+                <Text style={[styles.label, {color:theme.color}]}>Email Or Phone Number</Text>
+                <TextInput style={[styles.input, {backgroundColor: theme.cardbg, color: theme.color}]} 
                 placeholder='minatonamikaze@gmail.com'
                 />
                 <View style={styles.icon}>
@@ -44,8 +46,8 @@ const Create_account = () => {
                 </View>
             </View>
             <View style={styles.input_box}>
-                <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.password_input} 
+                <Text style={[styles.label, {color:theme.color}]}>Password</Text>
+                <TextInput style={[styles.password_input, {backgroundColor: theme.cardbg, color: theme.color}]} 
                 placeholder='Password'
                 secureTextEntry = {!Passwordvisible}
                 />
@@ -62,14 +64,14 @@ const Create_account = () => {
         <View style={styles.tab_container}>
             {
                 log_methods.map((d) => (
-                    <TouchableOpacity style={styles.tab} key={d.id}>
+                    <TouchableOpacity style={[styles.tab, {backgroundColor: theme.cardbg}]} key={d.id}>
                         {d.image}
-                        <Text style={styles.tab_text}>{d.text}</Text>
+                        <Text style={[styles.tab_text, {color: theme.color}]}>{d.text}</Text>
                     </TouchableOpacity>
                 ))
             }
         </View>
-        <Text style={styles.bottom_text}>Already have an account?<Link href='/login' style={styles.link} > Login</Link></Text>
+        <Text style={[styles.bottom_text, {color:theme.color}]}>Already have an account?<Link href='/login' style={styles.link} > Login</Link></Text>
         </ScrollView>
     </View>
   )
@@ -166,6 +168,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 12,
         paddingHorizontal: 25,
+        backgroundColor: 'transparent',
     },
     tab_text: {
         fontSize: 16,

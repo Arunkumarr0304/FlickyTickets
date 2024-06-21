@@ -1,6 +1,6 @@
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { Montserrat_500Medium, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Home from "../../assets/images/home.svg";
@@ -11,16 +11,19 @@ import Active_home from "../../assets/images/active_home.svg";
 import Active_Ticket from '../../assets/images/active_ticket.svg';
 import Active_Fav from '../../assets/images/active_heart.svg';
 import Active_Profile from "../../assets/images/active_profile.svg";
+import ThemeContext from '../../theme/ThemeContext';
 
 const TabBarButton = ({ children, onPress, accessibilityState, title }) => {
   const isSelected = accessibilityState.selected;
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   return (
     
     <TouchableOpacity
       onPress={onPress}
       style={[
         styles.tabButton,
-        isSelected ? styles.activeTabButton : null
+        isSelected ? styles.activeTabButton : null,
+        {backgroundColor: theme.coloring}
       ]}
     >
       {children}
@@ -32,8 +35,9 @@ const TabBarButton = ({ children, onPress, accessibilityState, title }) => {
 };
 
 const TabsLayout = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.container, {backgroundColor: theme.coloring}]}>
       <Tabs
         screenOptions={({ route }) => ({
           tabBarShowLabel: false,
@@ -42,7 +46,7 @@ const TabsLayout = () => {
           tabBarButton: (props) => (
             <TabBarButton {...props} title={route.name} />
           ),
-          tabBarStyle: [styles.tabBar],
+          tabBarStyle: [styles.tabBar, {backgroundColor: theme.coloring}],
           headerShown: false, 
           tabBarIcon: ({ focused }) => {
             let IconComponent;

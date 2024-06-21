@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import ThemeContext from '../../theme/ThemeContext';
 
 const CustomCalendar = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const getCurrentMonthDates = () => {
@@ -41,8 +43,8 @@ const CustomCalendar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Choose a day</Text>
-        <Text style={styles.headerText}>. {currentMonth} {currentYear}</Text>
+        <Text style={[styles.headerText, {color: theme.color}]}>Choose a day</Text>
+        <Text style={[styles.headerText, {color: theme.color}]}>. {currentMonth} {currentYear}</Text>
       </View>
       <ScrollView horizontal style={styles.monthContainer} showsHorizontalScrollIndicator={false}>
         {monthDates.map((date, index) => (

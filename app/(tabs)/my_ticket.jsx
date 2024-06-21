@@ -1,80 +1,88 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import Back from "../../assets/images/back.svg";
+import Dark_back from "../../assets/images/dark_back.svg";
 import Calendar from "../../assets/images/calendar.svg";
+import Dark_calendar from "../../assets/images/dark_calendar.svg";
 import { Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Button from "../../components/Button/Button";
 import { Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
 import Mini from "../../assets/images/mini_ticket.svg";
+import Dark_mini from "../../assets/images/dark_mini_ticket.svg";
 import Camera from "../../assets/images/camera.svg";
 import { tickets } from '../../components/Data/Data';
 import Ticket from "../../assets/images/ticket.png";
 import Line from "../../assets/images/Line.svg";
 import { router, Link } from "expo-router";
+import ThemeContext from '../../theme/ThemeContext';
 
 
 const My_ticket = () => {
-
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   const details = () => {
-    router.push('movie_details');
+    router.push('ticket_details');
   };
-
+  const back = () => {
+    router.push('home');
+  };
   return (
-    <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.head_left}>
-          <Back />
-          <Text style={styles.heading}>My Ticket</Text>
-          </View>
-          <Calendar />
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={styles.header}>
+        <View style={styles.head_left}>
+          <TouchableOpacity onPress={back}>
+            {darkMode ? <Dark_back /> : <Back />}
+          </TouchableOpacity>
+          <Text style={[styles.heading, { color: theme.color }]}>My Ticket</Text>
         </View>
-        <View style={styles.button_row}>
-          <Button buttonText="upcoming" />
-          <Button buttonText="history" backgroundColor="#ffffff" textColor="#1C31A5" borderColor="#1C31A5" />
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        {darkMode ? <Dark_calendar /> : <Calendar />}
+      </View>
+      <View style={styles.button_row}>
+        <Button buttonText="upcoming" />
+        <Button buttonText="history" backgroundColor="#ffffff" textColor="#1C31A5" borderColor="#1C31A5" />
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.tickets_container}>
           {
             tickets.map((d) => (
               <View style={styles.ticket_inner_container} key={d.id}>
-              <Text style={styles.date}>Movie on 27 June 2024</Text>
-              <TouchableOpacity style={styles.ticket} onPress={details} >
-                <View style={styles.content}>
-                  <View sty={styles.top_content}>
-                  <View style={styles.ticket_row}>
-                      <Mini />
-                      <Text style={styles.movie}>{d.movie_name}</Text>
-                  </View>
-                  <View style={styles.heading1}>
-                    <Text style={styles.name}>name</Text>
-                    <Text style={styles.name}>ticket</Text>
-                  </View>
-                  <View style={styles.name_row}>
-                  <Text style={styles.name2}>{d.name}</Text>
-                    <Text style={styles.name2}>{d.seats}</Text>
-                  </View>
-                  </View>
-                  <Line />
-                  <View style={styles.status_row}>
-                    <View style={styles.column}>
-                      <Text style={styles.name2}>{d.time}</Text>
-                      <Text style={styles.name}>Enter Cinema</Text>
+                <Text style={[styles.date, { color: theme.color }]}>Movie on 27 June 2024</Text>
+                <TouchableOpacity style={[styles.ticket, { backgroundColor: theme.coloring }]} onPress={details} >
+                  <View style={styles.content}>
+                    <View sty={styles.top_content}>
+                      <View style={styles.ticket_row}>
+                       { darkMode? <Dark_mini /> : <Mini />}
+                        <Text style={[styles.movie, {color: theme.color}]}>{d.movie_name}</Text>
+                      </View>
+                      <View style={styles.heading1}>
+                        <Text style={styles.name}>name</Text>
+                        <Text style={styles.name}>ticket</Text>
+                      </View>
+                      <View style={styles.name_row}>
+                        <Text style={[styles.name2, {color: theme.color}]}>{d.name}</Text>
+                        <Text style={[styles.name2, {color: theme.color}]}>{d.seats}</Text>
+                      </View>
                     </View>
-                    <View style={styles.image_box}>
-                    <Camera />
-                    </View>
-                    <View style={styles.column}>
-                      <Text style={styles.name2}>{d.status}</Text>
-                      <Text style={styles.name}>status</Text>
+                    <Line />
+                    <View style={styles.status_row}>
+                      <View style={styles.column}>
+                        <Text style={[styles.name2, {color: theme.color}]}>{d.time}</Text>
+                        <Text style={styles.name}>Enter Cinema</Text>
+                      </View>
+                      <View style={styles.image_box}>
+                        <Camera />
+                      </View>
+                      <View style={styles.column}>
+                        <Text style={[styles.name2, {color: theme.color}]}>{d.status}</Text>
+                        <Text style={styles.name}>status</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
               </View>
             ))
           }
         </View>
-        </ScrollView>
+      </ScrollView>
     </View>
   )
 }
@@ -130,7 +138,7 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: 10,
   },
- 
+
   ticket_row: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, StatusBar } from 'react-native';
+import React, { useContext, useState } from 'react';
 import Swiper from 'react-native-swiper';
 import profile from "../../assets/images/home_profile.png";
 import { Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
@@ -10,18 +10,30 @@ import Mic from "../../assets/images/mic.svg";
 import { recommend_data, slider_data } from '../../components/Data/Data';
 import Imdb from "../../assets/images/imdb.svg";
 import Upcoming from '../../components/Upcoming/Upcoming';
+import { router, Link } from "expo-router";
+import ThemeContext from '../../theme/ThemeContext';
 
 const Home = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const details = () => {
+    router.push('movie_details');
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
+        <StatusBar 
+        translucent
+        backgroundColor="transparent"
+        barStyle={darkMode ? "light-content" : "dark-content"} 
+      />
       <View style={styles.header}>
         <View style={styles.header_left}>
           <Image style={styles.image} source={profile} alt='image' />
           <View style={styles.header_content}>
             <Text style={styles.heading}>Welcome Back,</Text>
-            <Text style={styles.name}>Minato Namikaza</Text>
+            <Text style={[styles.name, {color: theme.color}]}>Minato Namikaza</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.notification}>
@@ -33,7 +45,7 @@ const Home = () => {
         <View style={styles.search}>
           <Search />
         </View>
-        <TextInput style={styles.input} placeholder='Search' />
+        <TextInput style={[styles.input, {backgroundColor: theme.coloring, color:theme.color}]} placeholder='Search' />
         <View style={styles.mic}>
           <Mic />
         </View>
@@ -44,7 +56,7 @@ const Home = () => {
           loop={false}
           onIndexChanged={(index) => setCurrentIndex(index)}
           paginationStyle={styles.paginationStyle}
-          dotStyle={styles.dotStyle}
+          dotStyle={[styles.dotStyle, {backgroundColor: theme.color}]}
           activeDotStyle={styles.activeDotStyle}
         >
           {
@@ -67,19 +79,19 @@ const Home = () => {
         </Swiper>
       </View>
       <View style={styles.recommend_header}>
-        <Text style={styles.rec_heading}>Recommended Movies</Text>
+        <Text style={[styles.rec_heading, {color: theme.color}]}>Recommended Movies</Text>
         <Text style={styles.see_all}>see all</Text>
       </View>
       <ScrollView horizontal={true} style={styles.recommend_container}>
         {
           recommend_data.map((d) => (
-            <TouchableOpacity style={styles.recommend_box} key={d.id}>
+            <TouchableOpacity style={styles.recommend_box} key={d.id} onPress={details}>
               <Image source={d.image} alt='image' style={styles.rec_image} />
               <View style={styles.content}>
-                <Text style={styles.rec_movie_name}>{d.name}</Text>
+                <Text style={[styles.rec_movie_name, {color: theme.color}]}>{d.name}</Text>
                 <View style={styles.rec_content_right}>
                 <Imdb />
-                <Text style={styles.rating}>{d.rating}</Text>
+                <Text style={[styles.rating, {color: theme.color}]}>{d.rating}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -278,7 +290,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   rec_image: {
-    
+    width: 160,
+    height: 240,
+    borderRadius: 10,
   },
   content: {
     flexDirection: 'row',

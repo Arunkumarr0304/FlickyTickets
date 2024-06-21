@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Back from "../../assets/images/back.svg";
+import Dark_back from "../../assets/images/dark_back.svg";
 import Movie from "../../assets/images/Slider1.png";
 import Heart from "../../assets/images/empty_heart.svg";
 import Empty from "../../assets/images/red_heart.svg";
@@ -8,8 +9,10 @@ import Imdb from "../../assets/images/imdb.svg";
 import { cast_data, crew_data, tabs } from '../../components/Data/Data';
 import Button from "../../components/Button/Button";
 import { router, Link } from "expo-router";
+import ThemeContext from '../../theme/ThemeContext';
 
 const Movie_details = () => {
+  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
   const [inWishlist, setInWishlist] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
 
@@ -20,40 +23,47 @@ const Movie_details = () => {
   const Book = () => {
     router.push('seat');
   };
+
+  const back = () => {
+    router.push('home');
+  };
+
   const renderData = activeTab === 1 ? cast_data : crew_data;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.header}>
-        <Back />
-        <Text style={styles.heading}>Turning Red</Text>
+        <TouchableOpacity onPress={back}>
+       {darkMode? <Dark_back /> :  <Back />}
+       </TouchableOpacity>
+        <Text style={[styles.heading, {color: theme.color}]}>Turning Red</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.image_box}>
         <Image source={Movie} alt='image' style={styles.image} />
       </View>
-      <View style={styles.detail_container}>
+      <View style={[styles.detail_container, {backgroundColor: theme.coloring}]}>
         <View style={styles.detail_top}>
-          <Text style={styles.movie_name}>Turning Red</Text>
+          <Text style={[styles.movie_name, {color: theme.color}]}>Turning Red</Text>
           <TouchableOpacity style={styles.wishlist} onPress={toggleWishlist}>
             {inWishlist ? <Empty /> : <Heart />}
           </TouchableOpacity>
         </View>
         <View style={styles.detail_bottom}>
-          <Text style={styles.theater_details}>2 hrs 15mins English IMAX</Text>
+          <Text style={[styles.theater_details, {color: theme.color}]}>2 hrs 15mins English IMAX</Text>
           <View style={styles.imdb_row}>
             <Imdb />
-            <Text style={styles.rating_row}>8.1<Text style={styles.rating}>/10</Text></Text>
+            <Text style={[styles.rating_row, {color: theme.color}]}>8.1<Text style={styles.rating}>/10</Text></Text>
           </View>
         </View>
       </View>
-      <Text style={styles.synopsis_header}>Synopsis</Text>
+      <Text style={[styles.synopsis_header, {color: theme.color}]}>Synopsis</Text>
       <Text style={styles.synopsis}>Frank Moses, a retired black-ops CIA agent, enjoys a quiet suburban life, disrupted only by phone calls with Sarah Ross, a pension office worker<Text style={styles.read}> Read More..</Text></Text>
       <View style={styles.tab_container}>
         {
           tabs.map((d) => (
             <TouchableOpacity style={styles.tab} key={d.id} onPress={() => setActiveTab(d.id)}>
-              <Text style={[styles.tab_text, activeTab === d.id && styles.active_tab_text]}>{d.text}</Text>
+              <Text style={[styles.tab_text, activeTab === d.id && styles.active_tab_text, {color: theme.color}]}>{d.text}</Text>
             </TouchableOpacity>
           ))
         }
@@ -63,7 +73,7 @@ const Movie_details = () => {
           renderData.map((d) => (
             <TouchableOpacity style={styles.cast_box} key={d.id}>
               <Image source={d.image} alt='image' style={styles.cast_image} />
-              <Text style={styles.cast_name}>{d.text}</Text>
+              <Text style={[styles.cast_name, {color: theme.color}]}>{d.text}</Text>
             </TouchableOpacity>
           ))
         }
