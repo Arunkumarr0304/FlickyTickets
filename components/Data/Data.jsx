@@ -97,6 +97,7 @@ export const slider_data = [
         upcoming: 'Upcoming Movie',
         movie: 'Turning Red',
         movie_timing: 'Booking Open On July 22,2024',
+        book: 'book now',
     },
     {
         id: 2,

@@ -68,7 +68,7 @@ const Profile = () => {
             </View>
             {d.name === 'Dark Mode' ? (
               <Switch
-                trackColor={{ false: "#767577", true: "#FF7735" }}
+                trackColor={{ false: "#767577", true: "#FF6F6C" }}
                 thumbColor={darkMode ? "#f4f3f4" : "#f4f3f4"}
                 onValueChange={toggleTheme}
                 value={darkMode}

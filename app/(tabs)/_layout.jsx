@@ -11,23 +11,26 @@ import Active_home from "../../assets/images/active_home.svg";
 import Active_Ticket from '../../assets/images/active_ticket.svg';
 import Active_Fav from '../../assets/images/active_heart.svg';
 import Active_Profile from "../../assets/images/active_profile.svg";
+import Dark_Active_home from "../../assets/images/dark_active_home.svg";
+import Dark_Active_Ticket from '../../assets/images/dark_active_ticket.svg';
+import Dark_Active_Fav from '../../assets/images/dark_active_heart.svg';
+import Dark_Active_Profile from "../../assets/images/dark_active_profile.svg";
 import ThemeContext from '../../theme/ThemeContext';
 
 const TabBarButton = ({ children, onPress, accessibilityState, title }) => {
   const isSelected = accessibilityState.selected;
-  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
-    
     <TouchableOpacity
       onPress={onPress}
       style={[
         styles.tabButton,
         isSelected ? styles.activeTabButton : null,
-        {backgroundColor: theme.coloring}
+        { backgroundColor: theme.coloring }
       ]}
     >
       {children}
-      <Text style={[styles.tabTitle, isSelected ? styles.activeTabTitle : null]}>
+      <Text style={[styles.tabTitle, isSelected ? [styles.activeTabTitle, {color:theme.bordercolor}] : null]}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -35,9 +38,9 @@ const TabBarButton = ({ children, onPress, accessibilityState, title }) => {
 };
 
 const TabsLayout = () => {
-  const { theme, darkMode, toggleTheme } = useContext(ThemeContext);
+  const { theme, darkMode } = useContext(ThemeContext);
   return (
-    <View style={[styles.container, {backgroundColor: theme.coloring}]}>
+    <View style={[styles.container, { backgroundColor: theme.coloring }]}>
       <Tabs
         screenOptions={({ route }) => ({
           tabBarShowLabel: false,
@@ -46,54 +49,74 @@ const TabsLayout = () => {
           tabBarButton: (props) => (
             <TabBarButton {...props} title={route.name} />
           ),
-          tabBarStyle: [styles.tabBar, {backgroundColor: theme.coloring}],
-          headerShown: false, 
+          tabBarStyle: [styles.tabBar, { backgroundColor: theme.coloring }],
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             let IconComponent;
-            switch (route.name) {
-              case 'home':
-                IconComponent = focused ? Active_home : Home;
-                break;
-              case 'my_ticket':
-                IconComponent = focused ? Active_Ticket : Ticket;
-                break;
-              case 'favourite':
-                IconComponent = focused ? Active_Fav : Fav;
-                break;
-              case 'profile':
-                IconComponent = focused ? Active_Profile : Profile;
-                break;
-              default:
-                IconComponent = Home;
-                break;
+            if (focused) {
+              switch (route.name) {
+                case 'home':
+                  IconComponent = darkMode ? Dark_Active_home : Active_home;
+                  break;
+                case 'my_ticket':
+                  IconComponent = darkMode ? Dark_Active_Ticket : Active_Ticket;
+                  break;
+                case 'favourite':
+                  IconComponent = darkMode ? Dark_Active_Fav : Active_Fav;
+                  break;
+                case 'profile':
+                  IconComponent = darkMode ? Dark_Active_Profile : Active_Profile;
+                  break;
+                default:
+                  IconComponent = Home;
+                  break;
+              }
+            } else {
+              switch (route.name) {
+                case 'home':
+                  IconComponent = Home;
+                  break;
+                case 'my_ticket':
+                  IconComponent = Ticket;
+                  break;
+                case 'favourite':
+                  IconComponent = Fav;
+                  break;
+                case 'profile':
+                  IconComponent = Profile;
+                  break;
+                default:
+                  IconComponent = Home;
+                  break;
+              }
             }
             return <IconComponent />;
           },
         })}
       >
-        <Tabs.Screen 
-          name="home" 
+        <Tabs.Screen
+          name="home"
           options={{
             title: 'Home',
-          }} 
+          }}
         />
-        <Tabs.Screen 
-          name="my_ticket" 
+        <Tabs.Screen
+          name="my_ticket"
           options={{
             title: 'My_ticket',
-          }} 
+          }}
         />
-        <Tabs.Screen 
-          name="favourite" 
+        <Tabs.Screen
+          name="favourite"
           options={{
             title: 'Favorite',
-          }} 
+          }}
         />
-        <Tabs.Screen 
-          name="profile" 
+        <Tabs.Screen
+          name="profile"
           options={{
             title: 'Profile',
-          }} 
+          }}
         />
       </Tabs>
     </View>
@@ -113,7 +136,7 @@ const styles = StyleSheet.create({
     elevation: 0,
     backgroundColor: '#F6F6F6',
     borderRadius: 10,
-    paddingTop: 10, 
+    paddingTop: 10,
   },
   tabButton: {
     flex: 1,
@@ -132,9 +155,7 @@ const styles = StyleSheet.create({
     color: '#1C31A5',
     fontFamily: 'Montserrat_700Bold',
   },
-  activeTabButton: {
-    
-  },
+  activeTabButton: {},
 });
 
 export default TabsLayout;

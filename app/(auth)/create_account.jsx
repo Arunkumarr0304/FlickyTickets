@@ -186,6 +186,6 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
     },
     link: {
-        color: '#FF8482',
+        color: '#FF95AE',
     }
 })
